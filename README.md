@@ -147,6 +147,10 @@ Le fichier `presentation final pou reseau..pkt` est un fichier Packet Tracer bin
 
 Ce projet pose les bases d’une infrastructure hospitalière IoT sécurisée, combinant automatisation, supervision et cybersécurité. La simulation montre comment isoler les flux, filtrer les communications et protéger un réseau d’objets connectés dans un contexte sensible.
 
+## Commentaire sur les push
+
+Un `push` envoie les modifications locales vers le dépôt distant sur GitHub. Dans ce projet, la branche `feature/add-readme-file-descriptions` a été poussée vers `origin`, ce qui met les changements en ligne et permet de créer une Pull Request.
+
 ## Contact
 
 Pour plus d’informations ou questions sur ce projet, consultez le fichier du projet ou contactez l’auteur.
