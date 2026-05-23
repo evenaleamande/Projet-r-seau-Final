@@ -1,54 +1,147 @@
-# Projet-r-seau-Final
+﻿# Projet Réseau IoT Sécurisé
 
+## Contexte
 
+Ce projet présente la conception et la sécurisation d’un réseau IoT dans un environnement hospitalier intelligent. L’objectif est de modéliser un réseau sécurisé pour la surveillance d’une chambre de patient, en utilisant des capteurs, des actionneurs et des contrôleurs connectés.
 
-#Conception d'un Réseau IoT Sécurisé : 
+## Description
 
-Application en Milieu Hospitalier
+Le projet illustre comment des objets connectés (caméras, détecteurs de présence, capteurs environnementaux, systèmes d’alarme) peuvent s’interfacer avec une passerelle IoT et un serveur central pour effectuer une assistance automatisée et garantir la sécurité du patient.
 
- Introduction au projet
+## Objectif
 
- Ce projet porte sur la conception et la sécurisation d'un réseau IoT (Internet des Objets) appliqué à un environnement hospitalier intelligent, plus précisément pour la surveillance d'une chambre adaptée aux personnes en situation de handicap.
+- Concevoir une architecture réseau IoT sécurisée
+- Garantir la confidentialité et l’intégrité des données échangées
+- Segmenter le réseau en VLANs pour limiter la surface d’attaque
+- Mettre en place des règles de filtrage et de contrôle d’accès
+- Démontrer la simulation d’un scénario hospitalier intelligent
 
-L'objectif de ce travail est de démontrer comment l'interconnexion de dispositifs intelligents (caméras, capteurs de mouvement, actionneurs) peut automatiser l'assistance d'un patient tout en garantissant un contrôle strict et une sécurité réseau maximale face aux intrusions.
+## Architecture et composants
 
----
+- Routeur principal pour le routage inter-VLAN et l’application des ACL
+- Commutateur (switch) pour la segmentation VLAN
+- Passerelle IoT connectant les capteurs et actionneurs
+- Serveur IoT et système de supervision pour l’analyse des données
+- Équipements hospitaliers : webcam, détecteur de mouvement, lumière intelligente, fenêtre motorisée
 
- Qu'est-ce qu'un Réseau IoT ?
+## Sécurité
 
-L'**IoT (Internet of Things)** ou *Internet des Objets* représente l'infrastructure technologique qui permet à des objets physiques de se connecter à Internet afin de collecter, traiter et échanger des données en temps réel sans intervention humaine constante. 
+- Isolation des appareils IoT sur un VLAN dédié
+- Filtrage du trafic entre VLANs via des ACL
+- Utilisation de SSH pour l’administration distante
+- Séparation du réseau de supervision et du réseau invité
+- Protection contre les accès non autorisés et les intrusions
 
-Dans le cadre d'un réseau hospitalier :
-Les Capteurs (Entrées) :** Détecteurs de mouvement, webcams de surveillance ou capteurs environnementaux qui mesurent l'état de la chambre.
-Les Actionneurs (Sorties) :** Lampes automatiques, sirènes d'alarme ou systèmes d'ouverture de fenêtres qui réagissent selon les données reçues.
-Le Contrôleur (Cœur du système) :** Un serveur IoT central ou une passerelle (Home Gateway) qui reçoit les requêtes, analyse les conditions définies et ordonne l'exécution des actions.
+## Scénarios de simulation
 
----
- Comment assurer la Sécurisation d'un Réseau IoT ?
+- Assistance automatique : activation de la lumière et capture vidéo en cas de mouvement
+- Confort : régulation de l’ouverture de la fenêtre selon les paramètres ambiants
+- Intrusion : déclenchement d’une alarme et notification du personnel en cas d’accès suspect
 
-La prolifération des objets connectés augmente considérablement la surface d'attaque d'une infrastructure. Sécuriser un réseau IoT demande une approche rigoureuse à plusieurs niveaux :
+## Configuration des équipements
 
-1. La Segmentation Réseau (VLANs) :** Séparer les flux de données. Le réseau de la chambre IoT (patient) et celui du contrôleur central (administration) doivent se trouver sur des sous-réseaux distincts (par exemple via des routeurs configurés comme le modèle 2811), afin qu'une faille sur un objet connecté n'impacte pas tout l'hôpital.
-   
-2. **Le Contrôle d'Accès et le Filtrage (ACL) :**
-   Mettre en place des Listes de Contrôle d'Accès (ACL) sur les routeurs et commutateurs (Switches 2960) pour autoriser uniquement les équipements légitimes (comme le smartphone du superviseur ou le serveur IoT officiel) à interagir avec la chambre.
-   
-3. L'Automatisation des Règles Conditionnelles (Algorithme IoT) 
-   Le système doit être programmé avec des conditions logiques strictes. Si une anomalie ou une tentative d'entrée non autorisée se produit, la caméra s'active immédiatement et le système déclenche une sirène d'alarme sonore côté contrôleur pour alerter instantanément le personnel de sécurité.
+Les configurations suivantes donnent un exemple type de réseau IoT sécurisé et peuvent être adaptées à la topologie du fichier Packet Tracer.
 
- Architecture et Scénarios de Simulation
+### Routeur principal
 
-Le projet est entièrement modélisé et simulé sous **Cisco. L'architecture met en opposition et en interconnexion deux pôles majeurs :
-À Gauche — Le Contrôleur de Sécurité :** Composé du serveur IoT principal, d'un smartphone de supervision et d'un système d'alarme redondant (sirènes).
-À Droite — La Chambre Patient :** Équipée d'une webcam, d'un détecteur de présence, d'une lumière intelligente et d'une fenêtre motorisée.
+```text
+hostname R1
+!
+enable secret cisco123
+username admin privilege 15 secret adminpass
+ip domain-name reseau-iot.local
+crypto key generate rsa modulus 1024
+!
+interface GigabitEthernet0/0
+ description Lien vers VLAN IoT
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Lien vers VLAN Administration
+ ip address 192.168.20.1 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Lien vers VLAN Invités
+ ip address 192.168.30.1 255.255.255.0
+ no shutdown
+!
+ip routing
+!
+access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.30.0 0.0.0.255
+access-list 100 deny ip 192.168.30.0 0.0.0.255 192.168.10.0 0.0.0.255
+access-list 100 permit ip any any
+!
+line vty 0 4
+ transport input ssh
+ login local
+!
+service password-encryption
+!
+end
+```
 
-Scénarios programmés :
-Assistance Automatique :** Si le patient se déplace ou a un problème (mouvement capté), la lumière s'allume automatiquement et la webcam effectue une capture visuelle.
-Gestion du Confort :** Régulation de l'ouverture de la fenêtre selon les paramètres climatiques.
-Protocole d'Intrusion :** Si une personne inconnue tente d'accéder à la zone restreinte, l'alarme se déclenche automatiquement pour appeler à une intervention immédiate.
+### Commutateur principal
 
+```text
+hostname SW1
+!
+vlan 10
+ name IoT
+!
+vlan 20
+ name Administration
+!
+vlan 30
+ name Invites
+!
+interface range FastEthernet0/1 - 8
+ switchport mode access
+ switchport access vlan 10
+!
+interface range FastEthernet0/9 - 16
+ switchport mode access
+ switchport access vlan 20
+!
+interface range FastEthernet0/17 - 24
+ switchport mode access
+ switchport access vlan 30
+!
+interface Vlan10
+ ip address 192.168.10.2 255.255.255.0
+ no shutdown
+!
+interface Vlan20
+ ip address 192.168.20.2 255.255.255.0
+ no shutdown
+!
+interface Vlan30
+ ip address 192.168.30.2 255.255.255.0
+ no shutdown
+!
+ip default-gateway 192.168.20.1
+!
+end
+```
 
-##  Conclusion 
+### Passerelle IoT / segmentation
 
-mercii
-Ce projet de conception pose les bases concrètes d'une infrastructure hospitalière connectée moderne, combinant l'automatisation de l'assistance et la rigueur de la cybersécurité. Grâce à la simulation complète de l'architecture réseau et à la programmation des conditions IoT, notre équipe est pleinement prête pour l'exposé. Les configurations réseau sont prêtes, les scénarios de sécurité sont validés, et nous sommes impatients de vous présenter la démonstration en direct de ce système intelligent !
+- Séparer les objets IoT dans le VLAN 10
+- Placer les équipements de supervision dans le VLAN 20
+- Réserver le VLAN 30 aux accès invités
+- Appliquer des ACL sur le routeur pour limiter l’accès entre les segments
+- Chiffrer les sessions d’administration via SSH
+
+### Notes importantes
+
+Le fichier `presentation final pou reseau..pkt` est un fichier Packet Tracer binaire. La configuration exacte des équipements doit être extraite en ouvrant le fichier avec Cisco Packet Tracer et en copiant les commandes de chaque appareil.
+
+## Conclusion
+
+Ce projet pose les bases d’une infrastructure hospitalière IoT sécurisée, combinant automatisation, supervision et cybersécurité. La simulation montre comment isoler les flux, filtrer les communications et protéger un réseau d’objets connectés dans un contexte sensible.
+
+## Contact
+
+Pour plus d’informations ou questions sur ce projet, consultez le fichier du projet ou contactez l’auteur.
