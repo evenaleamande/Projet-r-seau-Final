@@ -51,7 +51,5 @@ Protocole d'Intrusion :** Si une personne inconnue tente d'accéder à la zone r
 
 ##  Conclusion 
 
-Ce projet de conception pose les bases concrètes d'une infrastructure hospitalière connectée moderne, combinant l'automatisation de l'assistance et la rigueur de la cybersécurité. Grâce à la simulation complète de l'architecture réseau et à la programmation des conditions IoT, notre équipe est pleinement prête pour l'exposé. Les configurations réseau sont prêtes, les scénarios de sécurité sont validés, et nous sommes impatients de vous présenter la démonstration en direct de ce système intelligent .
-
 mercii
 Ce projet de conception pose les bases concrètes d'une infrastructure hospitalière connectée moderne, combinant l'automatisation de l'assistance et la rigueur de la cybersécurité. Grâce à la simulation complète de l'architecture réseau et à la programmation des conditions IoT, notre équipe est pleinement prête pour l'exposé. Les configurations réseau sont prêtes, les scénarios de sécurité sont validés, et nous sommes impatients de vous présenter la démonstration en direct de ce système intelligent !
