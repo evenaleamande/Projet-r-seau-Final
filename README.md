@@ -138,6 +138,11 @@ end
 
 Le fichier `presentation final pou reseau..pkt` est un fichier Packet Tracer binaire. La configuration exacte des équipements doit être extraite en ouvrant le fichier avec Cisco Packet Tracer et en copiant les commandes de chaque appareil.
 
+#### Fichiers associés
+
+- `capture du modèle de conception.png` : représentation de notre modèle de conception pour le réseau IoT sécurisé
+- `presentation final pou reseau..pkt` : fichier Cisco Packet Tracer montrant notre architecture
+
 ## Conclusion
 
 Ce projet pose les bases d’une infrastructure hospitalière IoT sécurisée, combinant automatisation, supervision et cybersécurité. La simulation montre comment isoler les flux, filtrer les communications et protéger un réseau d’objets connectés dans un contexte sensible.
