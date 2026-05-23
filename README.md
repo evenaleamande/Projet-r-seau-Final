@@ -47,7 +47,6 @@ Assistance Automatique :** Si le patient se déplace ou a un problème (mouvemen
 Gestion du Confort :** Régulation de l'ouverture de la fenêtre selon les paramètres climatiques.
 Protocole d'Intrusion :** Si une personne inconnue tente d'accéder à la zone restreinte, l'alarme se déclenche automatiquement pour appeler à une intervention immédiate.
 
----
 
 ##  Conclusion 
 
